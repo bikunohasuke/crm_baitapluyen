@@ -24,13 +24,13 @@ $(document).ready(function () {
                         $("#page-wrapper").css("min-height", (height) + "px");
                     }
                 });
-                var url = window.location;
+                /*var url = window.location;
                 var element = $('ul.nav a').filter(function () {
                     return this.href == url || url.href.indexOf(this.href) == 0;
                 }).addClass('active').parent().parent().addClass('in').parent();
                 if (element.is('li')) {
                     element.addClass('active');
-                }
+                }*/
             });
             // This is for resize window
             $(function () {
@@ -96,3 +96,4 @@ $(document).ready(function () {
                 }
                 e.preventDefault();
             });
+})

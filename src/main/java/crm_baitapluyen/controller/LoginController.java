@@ -1,10 +1,6 @@
 package crm_baitapluyen.controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,14 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import config.MySQLConfig;
 import crm_baitapluyen.services.LoginServices;
 import entity.Users;
 
 @WebServlet(name = "loginController", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
-	
-	private LoginServices loginServices = new LoginServices();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -54,6 +47,8 @@ public class LoginController extends HttpServlet {
 		req.getRequestDispatcher("login.jsp").forward(req, resp);
 	}
 	
+	private LoginServices loginServices = new LoginServices();
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
@@ -61,26 +56,13 @@ public class LoginController extends HttpServlet {
 		String password = req.getParameter("password");
 		String remember = req.getParameter("remember");
 		
-		List<Users> listUsers = loginServices.login(email, password);
+		List<Users> listUsers = loginServices.login(email, password, remember);
 		
-		if (!listUsers.isEmpty()) {
-			// Tạo cookie
-			// Tạo cookie có tên là email và giá trị lưu trữ là email người dùng nhập
-			if (remember != null) {
-				Cookie cEmail = new Cookie("email", email);
-				cEmail.setMaxAge(1 * 60); // 1 * 60 * 60 * 1000
-				
-				Cookie cPassword = new Cookie("password", password);
-				cPassword.setMaxAge(1 * 60);
-
-				// Bắt client tạo ra cookie
-				resp.addCookie(cEmail);
-				resp.addCookie(cPassword);
-			}
-			
+		for (Cookie cookie : loginServices.listCookies) {
+			resp.addCookie(cookie);
 		}
 		
-		req.getRequestDispatcher("login.jsp").forward(req, resp);
+		resp.sendRedirect(req.getContextPath());
 	}
 	
 }

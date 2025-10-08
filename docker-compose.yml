@@ -1,0 +1,11 @@
+# Nơi lưu trữ thông tin cấu hình của tất cả các ứng dụng mà mình sử dụng trong docker
+# hoặc trong project
+
+services:
+  mysql: # tên service (đặt gì cũng được)
+    image: mysql:latest # tên image và version sử dụng
+    container_name: mysql10 # tên của ứng dụng khi được chạy lên
+    environment: # biến môi trường sử dụng trong ứng dụng (nhớ mỗi ứng dụng mỗi khác)
+      - MYSQL_ROOT_PASSWORD=admin123
+    ports:
+      - 3307:3306

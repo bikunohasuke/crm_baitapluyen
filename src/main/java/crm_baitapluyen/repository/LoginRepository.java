@@ -36,6 +36,7 @@ public class LoginRepository {
 				Users user = new Users();
 				user.setId(resultSet.getInt("id"));
 				user.setFullname(resultSet.getString("fullname"));
+				user.setRoleId(resultSet.getInt("role_id"));
 				
 				listUsers.add(user);
 			}
